@@ -10,8 +10,9 @@
         v-for="personnality in personnalities"
         :key="personnality"
         :personnality="personnality"
-        v-on:remove-personnality="handleRemovePersonnality(personnality)"
-        v-on:send-message="handleSendMessage(personnality, $event)"/>
+        :messages="messages"
+        v-on:remove-personnality="removePersonnality"
+        v-on:send-message="sendMessage"/>
     </div>
     </section>
     <section class="page-container-section">
@@ -21,14 +22,14 @@
           <label>New character</label>
           <md-input v-model="newcharacter"></md-input>
       </md-field>
-      <md-button v-on:click="handleAddPersonnality" class="md-primary">Ajouter</md-button>
+      <md-button v-on:click="addPersonnality(newcharacter)" class="md-primary">Ajouter</md-button>
     </section>
   </div>
 </template>
 
 <script>
 import Chat from './components/Chat'
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 export default {
   name: 'App',
   components: {
@@ -39,8 +40,8 @@ export default {
     explanation: `Too shy to post on Reddit ? Too many personns inside wanting to have a say ?
       It is time to have a little chat with yourself.
     `,
-    addPersonnalityTitle: 'Need to *some yourself* else ?',
-    characterLabel: ''
+    addPersonnalityTitle: 'Want to add *some-yourself* else ?',
+    newcharacter: ''
   }),
   computed: {
     ...mapGetters([
@@ -49,15 +50,7 @@ export default {
     ])
   },
   methods: {
-    handleSendMessage (personnality, e) {
-      console.log(e)
-    },
-    handleAddPersonnality () {
-      this.$store.dispatch('addPersonnality', this.characterLabel)
-    },
-    handleRemovePersonnality (personnality) {
-      this.$store.dispatch('removePersonnality', personnality)
-    }
+    ...mapActions(['sendMessage', 'addPersonnality', 'removePersonnality'])
   }
 
 }
