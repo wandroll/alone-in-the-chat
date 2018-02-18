@@ -66,6 +66,7 @@ export default {
       this.newMessage = ''
     },
     getMessageClass (message) {
+      if (message.from === '') return 'bot-message'
       return message.from === this.personnality ? 'response-message' : 'sent-message'
     },
     scrollDownToLastMessage () {
@@ -115,5 +116,9 @@ export default {
  }
 .response-message{
   text-align: right;
+}
+.bot-message{
+  font-style: italic;
+  color: $dove-gray;
 }
 </style>

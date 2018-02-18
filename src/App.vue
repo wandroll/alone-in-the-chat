@@ -62,7 +62,7 @@ export default {
 .application-wrapper {
   -webkit-box-flex: 1;
   flex: 1;
-      max-width: 1100px;
-    margin: 0 auto;
+  max-width: 1100px;
+  margin: 0 auto;
 }
 </style>

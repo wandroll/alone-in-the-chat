@@ -10,9 +10,11 @@ const actions = {
   },
   addPersonnality ({ commit }, characterLabel) {
     commit(types.ADD_PERSONNALITY, { characterLabel })
+    commit(types.ADD_MESSAGE, { from: '', content: 'characterLabel joined the conversation.' })
   },
   removePersonnality ({ commit }, characterLabel) {
     commit(types.REMOVE_PERSONNALITY, { characterLabel })
+    commit(types.ADD_MESSAGE, { from: '', content: 'characterLabel left the conversation.' })
   }
 }
 
