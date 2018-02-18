@@ -5,6 +5,14 @@
       <p>{{ labels.explanation }}</p>
     </section>
     <section class="page-container-section displaychats-section">
+    <section class="page-container-section addelements-section">
+      <h3>{{labels.addPersonnality.title}}</h3>
+
+      <md-field md-clearable>
+          <label>{{ labels.addPersonnality.field }}</label>
+          <md-input ref="newCharacterInput" v-model="newcharacter" maxlength="30" md-clearable @keyup.enter="addPersonnality(newcharacter)"></md-input>
+      </md-field>
+    </section>
     <div class="md-layout md-gutter">
       <Chat
         v-for="personnality in personnalities"
@@ -14,15 +22,6 @@
         v-on:remove-personnality="removePersonnality"
         v-on:send-message="sendMessage"/>
     </div>
-    </section>
-    <section class="page-container-section addelements-section">
-    <h2>{{labels.addPersonnality.title}}</h2>
-
-      <md-field md-clearable>
-          <label>{{ labels.addPersonnality.field }}</label>
-          <md-input v-model="newcharacter"></md-input>
-      </md-field>
-      <md-button v-on:click="addPersonnality(newcharacter)" class="md-primary">{{ labels.addPersonnality.button }}</md-button>
     </section>
   </div>
 </template>
@@ -40,9 +39,8 @@ export default {
       title: 'Alone in the Chat',
       explanation: 'Too shy to post on Reddit ? Too many personns inside wanting to have a say ? It is time to have a little chat with yourself.',
       addPersonnality: {
-        title: 'Want to add *some-yourself* else ?',
-        field: 'New character',
-        button: 'Add'
+        title: 'Invite *some-yourself* to the chat ?',
+        field: 'New character'
       }
     },
     newcharacter: ''

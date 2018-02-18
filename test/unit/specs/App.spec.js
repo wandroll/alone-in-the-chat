@@ -3,7 +3,7 @@
  * @see https://vue-test-utils.vuejs.org
  */
 
-import { mount, shallow, createLocalVue } from '@vue/test-utils'
+import { mount, createLocalVue } from '@vue/test-utils'
 import Vuex from 'vuex'
 import App from '@/App'
 import Chat from '@/components/Chat'
@@ -17,15 +17,14 @@ const DATA_SET = {
     title: 'Alone in the Chat',
     explanation: 'Too shy to post on Reddit ? Too many personns inside wanting to have a say ? It is time to have a little chat with yourself.',
     addPersonnality: {
-      title: 'Want to add *some-yourself* else ?',
-      field: 'New character',
-      button: 'Add'
+      title: 'Invite *some-yourself* to the chat ?',
+      field: 'New character'
     }
   },
   newcharacter: ''
 }
 
-const ADD_PERSONNALITY_BUTTON_SELECTOR = '.addelements-section md-button'
+const ADD_PERSONNALITY_FIELD_SELECTOR = {ref: 'newCharacterInput'}
 
 describe('App.vue', () => {
   let wrapper
@@ -59,17 +58,15 @@ describe('App.vue', () => {
     expect(title.text()).toEqual(labels.title)
     const description = wrapper.find('.header-section p')
     expect(description.text()).toEqual(labels.explanation)
-    const addelementsTitle = wrapper.find('.addelements-section h2')
+    const addelementsTitle = wrapper.find('.addelements-section h3')
     expect(addelementsTitle.text()).toEqual(labels.addPersonnality.title)
     const addelementsFieldLabel = wrapper.find('.addelements-section label')
     expect(addelementsFieldLabel.text()).toEqual(labels.addPersonnality.field)
-    const addelementsFieldButton = wrapper.find(ADD_PERSONNALITY_BUTTON_SELECTOR)
-    expect(addelementsFieldButton.text()).toEqual(labels.addPersonnality.button)
   })
 
-  it('should call store action "addPersonnality" when button is clicked', () => {
-    const wrapper = shallow(App, { store, localVue })
-    wrapper.find(ADD_PERSONNALITY_BUTTON_SELECTOR).trigger('click')
+  it('should call store action "addPersonnality" when Key enter is pressed on the field', () => {
+    const wrapper = mount(App, { store, localVue, attachToDocument: true })
+    wrapper.find(ADD_PERSONNALITY_FIELD_SELECTOR).trigger('keyup.enter')
     expect(actions.addPersonnality).toHaveBeenCalled()
   })
 

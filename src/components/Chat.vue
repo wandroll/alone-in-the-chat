@@ -1,24 +1,30 @@
 <template>
   <div class="md-layout-item">
     <div class="chat-container">
-      <md-toolbar md-elevation="0">
-        <h3 class="md-title">{{ personnality }}</h3>
+      <md-toolbar md-elevation="0" md-dense md-theme="dark" class="chat-title-container">
+        <span class="md-title chat-title">{{ personnality }}</span>
+        <md-button class="md-icon-button md-dense chat-button" @click="remove">
+          <md-icon>clear</md-icon>
+          <md-tooltip md-theme="default">{{ labels.remove }}</md-tooltip>
+        </md-button>
       </md-toolbar>
       <div class="chat-content">
         <div class="messages-wrapper" ref="messagesWrapper">
           <div
             v-for="(message, idx) in messages"
             v-bind:class="getMessageClass(message)"
+            class="message-line"
             :key="idx">
             {{ message.from }} : {{ message.content}}
           </div>
         </div>
         <md-field>
           <label>{{labels.addMessage}}</label>
-          <md-textarea v-model="newMessage" @keyup.enter.native="submit"></md-textarea>
+          <md-textarea ref="newmessageField"
+            v-model="newMessage"
+            @keyup.enter="submit"
+            md-clearable></md-textarea>
         </md-field>
-        <md-button v-on:click="submit" class="md-primary submit-button">{{ labels.submit}}</md-button>
-        <md-button v-on:click="reset" class="md-primary erase-button">{{ labels.send }}</md-button>
       </div>
     </div>
   </div>
@@ -43,7 +49,8 @@ export default {
       labels: {
         addMessage: 'Write',
         submit: 'Send',
-        reset: 'Reset'
+        reset: 'Reset',
+        remove: 'Remove'
       }
     }
   },
@@ -51,6 +58,9 @@ export default {
     submit () {
       this.$emit('send-message', { from: this.personnality, content: this.newMessage })
       this.reset()
+    },
+    remove () {
+      this.$emit('remove-personnality', this.personnality)
     },
     reset () {
       this.newMessage = ''
@@ -72,21 +82,37 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
+<style lang="scss" scoped>
+@import '../assets/style/global.scss';
+
 .chat-container {
-  border: 1px solid #616161;
+  border: 1px solid $dove-gray;
 }
 
 .chat-content {
   padding:16px;
 }
 
+.chat-title-container{
+  background-color: $dove-gray;
+}
+.chat-title {
+  background-color: $dove-gray;
+  color: $white;
+}
+.chat-button{
+  position: absolute;
+  right: 1em;
+  color: $white;
+}
 .messages-wrapper {
   max-height: 20em;
   padding-bottom: 1.5em;
   overflow-y: auto;
 }
-
+.message-line{
+  word-wrap: break-word;
+ }
 .response-message{
   text-align: right;
 }

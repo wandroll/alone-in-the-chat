@@ -6,8 +6,7 @@
 import { mount } from '@vue/test-utils'
 import Chat from '@/components/Chat'
 
-const SEND_MESSAGE_BUTTON_SELECTOR = '.submit-button'
-const ERASE_MESSAGE_BUTTON_SELECTOR = '.erase-button'
+const NEW_MESSAGE_SELECTOR = { ref: 'newmessageField' }
 
 /**
  * Functionnality
@@ -21,18 +20,23 @@ describe('Chat.vue', () => {
   let wrapper
 
   beforeEach(() => {
-    wrapper = mount(Chat)
+    wrapper = mount(Chat, {
+      propsData: {
+        personnality: 'testPersonnality'
+      },
+      attachToDocument: true
+    })
   })
 
   it('should render correct labels correctly', () => {
   })
 
   it('should emit "sendMessage" when button "sendMessage" is clicked', () => {
-    wrapper.find(SEND_MESSAGE_BUTTON_SELECTOR).trigger('click')
-    expect(wrapper.emitted().sendMessage).toHaveBeenCalled()
+    wrapper.find(NEW_MESSAGE_SELECTOR).trigger('keyup.enter')
+    expect(wrapper.emitted('send-message')).toBeTruthy()
   })
 
-  it('should erase "newMessage" when button "sendMessage" is clicked', () => {
+  it('should erase "newMessage" when message is sent', () => {
     wrapper.setData({
       newMessage: 'Say something',
       labels: {
@@ -41,12 +45,7 @@ describe('Chat.vue', () => {
         reset: 'Reset'
       }
     })
-    wrapper.find(ERASE_MESSAGE_BUTTON_SELECTOR).trigger('click')
-    // expect(wrapper.emitted().sendMessage).toHaveBeenCalled()
-  })
-
-  it('should erase "newMessage" when button "reset" is clicked', () => {
-    wrapper.find(ERASE_MESSAGE_BUTTON_SELECTOR).trigger('click')
-    // expect(wrapper.emitted().sendMessage).toHaveBeenCalled()
+    wrapper.find(NEW_MESSAGE_SELECTOR).trigger('keyup.enter')
+    expect(wrapper.find(NEW_MESSAGE_SELECTOR).text()).toEqual('')
   })
 })
