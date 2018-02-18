@@ -39,13 +39,14 @@ describe('Chat.vue', () => {
         addMessage: 'Write',
         submit: 'Send',
         reset: 'Reset'
-      });
+      }
+    })
     wrapper.find(ERASE_MESSAGE_BUTTON_SELECTOR).trigger('click')
-   // expect(wrapper.emitted().sendMessage).toHaveBeenCalled()
+    // expect(wrapper.emitted().sendMessage).toHaveBeenCalled()
   })
 
   it('should erase "newMessage" when button "reset" is clicked', () => {
     wrapper.find(ERASE_MESSAGE_BUTTON_SELECTOR).trigger('click')
-   // expect(wrapper.emitted().sendMessage).toHaveBeenCalled()
+    // expect(wrapper.emitted().sendMessage).toHaveBeenCalled()
   })
 })
