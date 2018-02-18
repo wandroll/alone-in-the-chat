@@ -14,11 +14,11 @@
           </div>
         </div>
         <md-field>
-          <label>Ecrire</label>
+          <label>{{labels.addMessage}}</label>
           <md-textarea v-model="newMessage" @keyup.enter.native="submit"></md-textarea>
         </md-field>
-        <md-button v-on:click="submit" class="md-primary">Envoyer</md-button>
-        <md-button v-on:click="reset" class="md-primary">Effacer</md-button>
+        <md-button v-on:click="submit" class="md-primary submit-button">{{ labels.submit}}</md-button>
+        <md-button v-on:click="reset" class="md-primary erase-button">{{ labels.send }}</md-button>
       </div>
     </div>
   </div>
@@ -39,12 +39,16 @@ export default {
   },
   data () {
     return {
-      newMessage: 'Tell me thing'
+      newMessage: 'Say something',
+      labels: {
+        addMessage: 'Write',
+        submit: 'Send',
+        reset: 'Reset'
+      }
     }
   },
   methods: {
     submit () {
-      console.log('submit message from', this.personnality)
       this.$emit('send-message', { from: this.personnality, content: this.newMessage })
       this.reset()
     },
@@ -54,14 +58,14 @@ export default {
     getMessageClass (message) {
       return message.from === this.personnality ? 'response-message' : 'sent-message'
     },
-    setScrollDown () {
+    scrollDownToLastMessage () {
       const messagesWrapper = this.$refs.messagesWrapper
       messagesWrapper.scrollTop = messagesWrapper.scrollHeight
     }
   },
   watch: {
     messages () {
-      this.setScrollDown()
+      this.scrollDownToLastMessage()
     }
   }
 }
@@ -76,9 +80,11 @@ export default {
 .chat-content {
   padding:16px;
 }
+
 .messages-wrapper {
   max-height: 20em;
-  overflow-y: scroll;
+  padding-bottom: 1.5em;
+  overflow-y: auto;
 }
 
 .response-message{
