@@ -11,12 +11,12 @@ const actions = {
   addPersonnality ({ commit }, characterLabel) {
     if (characterLabel) {
       commit(types.ADD_PERSONNALITY, { characterLabel })
-      commit(types.ADD_MESSAGE, { from: '', content: 'characterLabel joined the conversation.' })
+      commit(types.ADD_MESSAGE, { from: '', content: `${characterLabel} joined the conversation.` })
     }
   },
   removePersonnality ({ commit }, characterLabel) {
     commit(types.REMOVE_PERSONNALITY, { characterLabel })
-    commit(types.ADD_MESSAGE, { from: '', content: 'characterLabel left the conversation.' })
+    commit(types.ADD_MESSAGE, { from: '', content: `${characterLabel} left the conversation.` })
   }
 }
 
