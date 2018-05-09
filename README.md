@@ -1,3 +1,5 @@
+[![Known Vulnerabilities](https://snyk.io/test/github/wandroll/alone-in-the-chat/badge.svg)](https://snyk.io/test/github/wandroll/alone-in-the-chat)
+
 # alone-in-the-chat
 
 > chat with yourself
